@@ -28,7 +28,10 @@ export const generateQueryPagination = (query: any) => {
 // из сущностей в базе, делает срез под query-параметры
 export const slicedEntityArray = (items: any, query: any) => {
     let array = []
-    array = items.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1).slice((query.pageNumber-1) * query.pageSize, (query.pageNumber-1) * query.pageSize + query.pageSize)
+    array = items
+        .sort((a, b) => a.createdAt < b.createdAt ? 1 : -1)
+        .slice((query.pageNumber-1) * query.pageSize, (query.pageNumber-1) * query.pageSize + query.pageSize)
+        
     return array
 }
 

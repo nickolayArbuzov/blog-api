@@ -14,9 +14,9 @@ export class UsersSQL {
   async banOneUserById(id: string, banInfo: BanInfo){
     const banUser = await this.db.query(
       `
-        update users
+        update ban_info_users
         set "isBanned" = $2, "banDate" = $3, "banReason" = $4
-        where id = $1
+        where "userId" = $1
       `,
       [id, banInfo.isBanned, banInfo.banDate, banInfo.banReason]
     )
@@ -32,7 +32,7 @@ export class UsersSQL {
         select u.id, u."createdAt", u.email, u.login, b."isBanned", b."banDate", b."banReason" 
         from users u
         left join ban_info_users b on b."userId" = u.id 
-        where "isBanned" in (${banCondition}) and (lower(u.email) like $3 or lower(u.login) like $4)
+        where b."isBanned" in (${banCondition}) and (lower(u.email) like $3 or lower(u.login) like $4)
         order by ${orderByWithDirection} 
         limit $2
         offset $1
@@ -45,7 +45,7 @@ export class UsersSQL {
         from users u 
         left join cred_info_users c on c."userId" = u.id
         left join ban_info_users b on b."userId" = u.id 
-        where "isBanned" in (${banCondition}) and (lower(email) like $1 or lower(login) like $2)
+        where b."isBanned" in (${banCondition}) and (lower(u.email) like $1 or lower(u.login) like $2)
       `,
       [`%${query.searchEmailTerm.toLocaleLowerCase()}%`, `%${query.searchLoginTerm.toLocaleLowerCase()}%`]
     )
@@ -118,9 +118,9 @@ export class UsersSQL {
   async passwordRecovery(email: string, code: string){
     const updateUser = await this.db.query(
       `
-        update users
+        update cred_info_users
         set code = $2
-        where email = $1
+        where "userId" in (select id from users where email = $1)
       `,
       [email, code]
     )
@@ -130,7 +130,7 @@ export class UsersSQL {
   async newPassword(passwordHash: string, passwordSalt: string, recoveryCode: string){
     return await this.db.query(
       `
-        update users
+        update cred_info_users
         set "passwordHash" = $1, "passwordSalt" = $2, "isActivated" = true
         where code = $3
       `,
@@ -168,9 +168,10 @@ export class UsersSQL {
   async findOneUserById(userId: string){
     const user = await this.db.query(
       `
-        select id, "isBanned"
-        from users
-        where id = $1
+        select u.id, b."isBanned"
+        from users u
+        left join ban_info_users on b."userId" = u.id
+        where u.id = $1
       `,
       [userId]
     )
@@ -213,9 +214,10 @@ export class UsersSQL {
   async findOneForCustomDecoratorByCode(code: string, field: string) {
     const user = await this.db.query(
       `
-        select id, "isActivated"
-        from users
-        where ${field} = $1
+        select u.id, c."isActivated"
+        from users u
+        left join cred_info_users c on u.id = c."userId"
+        where u.${field} = $1
       `,
       [code]
     )
@@ -225,9 +227,10 @@ export class UsersSQL {
   async findOneForCustomDecoratorCheckMail(email: string, field: string) {
     const user = await this.db.query(
       `
-        select id, "isActivated"
-        from users
-        where ${field} = $1
+        select u.id, c."isActivated"
+        from users u
+        left join cred_info_users c on u.id = c."userId"
+        where u.${field} = $1
       `,
       [email]
     )
@@ -237,7 +240,7 @@ export class UsersSQL {
   async registrationConfirmation(code: string) {
     return await this.db.query(
       `
-        update users
+        update cred_info_users
         set "isActivated" = true
         where code = $1
       `,
@@ -245,12 +248,13 @@ export class UsersSQL {
     )
   }
 
+  // TODO объеденить с passwordRecovery
   async registrationEmailResending(email: string, code: string){
     return await this.db.query(
       `
-        update users
+        update cred_info_users
         set code = $2
-        where email = $1
+        where "userId" in (select id from users where email = $1)
       `,
       [email, code]
     )
