@@ -37,6 +37,7 @@ export class UserMailIsExistRule implements ValidatorConstraintInterface {
         return true
       } else return false
     } catch (e) {
+      console.log('e', e)
       return false;
     }
   }
