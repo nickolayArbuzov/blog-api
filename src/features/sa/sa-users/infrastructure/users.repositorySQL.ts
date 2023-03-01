@@ -217,7 +217,7 @@ export class UsersSQL {
         select u.id, c."isActivated"
         from users u
         left join cred_info_users c on u.id = c."userId"
-        where u.${field} = $1
+        where c.${field} = $1
       `,
       [code]
     )

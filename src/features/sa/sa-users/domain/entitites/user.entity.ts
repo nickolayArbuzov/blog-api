@@ -15,10 +15,10 @@ export class UserEntity {
   @Column('timestamp with time zone')
   createdAt: string;
 
-  @Column('text')
+  @Column({ type: 'text', collation: 'C' })
   login: string;
 
-  @Column('text')
+  @Column({ type: 'text', collation: 'C' })
   email: string;
 
   @OneToOne(() => BanInfoUserEntity)
