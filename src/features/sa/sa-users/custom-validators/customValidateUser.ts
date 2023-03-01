@@ -32,7 +32,7 @@ export class UserMailIsExistRule implements ValidatorConstraintInterface {
 
   async validate(value: string) {
     try {
-      const user = await this.usersService.findOneForCustomDecoratorByEmail(value, 'mail')
+      const user = await this.usersService.findOneForCustomDecoratorByEmail(value, 'email')
       if(!user) {
         return true
       } else return false
@@ -74,7 +74,7 @@ export class UserMailCheckRule implements ValidatorConstraintInterface {
 
   async validate(value: string) {
     try {
-      const user = await this.usersService.findOneForCustomDecoratorCheckMail(value, 'mail')
+      const user = await this.usersService.findOneForCustomDecoratorCheckMail(value, 'email')
       if(user) {
         return true
       } else return false

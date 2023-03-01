@@ -41,17 +41,10 @@ describe('AppController', () => {
     });
 
     /*it('test', async () => {
-      await request(server).post('/auth/registration')
-      await request(server).post('/auth/registration')
-      await request(server).post('/auth/registration')
-      await request(server).post('/auth/registration')
-      await request(server).post('/auth/registration')
-      await request(server).post('/auth/registration')
-      await request(server).post('/auth/registration')
-      await request(server).post('/auth/registration')
-      await request(server).post('/auth/registration')
-      const res = await request(server).post('/auth/registration')
-      expect(res.status).toBe(429)
+      const reg = await request(server).post('/auth/registration').send({login: 'dsad', password: 'fdsdff', email: 'nickrabuzov@yandex.by'})
+      expect(reg.body).toStrictEqual(0)
+      const reg2 = await request(server).post('/auth/registration').send({login: 'dsadd', password: 'fdsdff', email: 'nickrabuzov@yandex.by'})
+      expect(reg2.body).toStrictEqual(0)
     })*/
 
   });
