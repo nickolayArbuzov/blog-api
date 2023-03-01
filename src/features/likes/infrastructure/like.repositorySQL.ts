@@ -49,14 +49,4 @@ export class LikesSQL {
       [like.userId, like.banned, like.login, like.postId, like.commentId, like.addedAt, like.status]
     )
   }
-  async updateBannedStatusInLikes(userId: string, banned: boolean){
-    return await this.db.query(
-      `
-        update likes
-        set banned = $2
-        where "userId" = $1
-      `,
-      [userId, banned]
-    )
-  }
 }

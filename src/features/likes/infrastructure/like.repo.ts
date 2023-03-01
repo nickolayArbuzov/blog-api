@@ -29,8 +29,4 @@ export class LikesRepo {
     }
     return true
   }
-
-  async updateBannedStatusInLikes(userId: string, banned: boolean){
-    return this.likesRepo.updateBannedStatusInLikes(userId, banned)
-  }
 }

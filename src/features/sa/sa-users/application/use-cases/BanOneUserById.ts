@@ -24,7 +24,6 @@ export class BanOneUserByIdUseCase {
       banDate: command.banUserDto.isBanned ? date.toISOString() : null,
       banReason: command.banUserDto.isBanned ? command.banUserDto.banReason : null,
     }
-    await this.likesRepo.updateBannedStatusInLikes(command.userId, command.banUserDto.isBanned)
     return await this.usersRepo.banOneUserById(command.userId, banInfo)
   }
 }
