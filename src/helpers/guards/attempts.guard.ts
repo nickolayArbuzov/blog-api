@@ -1,17 +1,23 @@
 import { Injectable, CanActivate, ExecutionContext, HttpException, HttpStatus } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
 import { Attempts } from '../state/attempts';
 
 @Injectable()
 export class AttemptsGuard implements CanActivate {
+  constructor(
+    private configService: ConfigService,
+  ){}
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
+    if(!+this.configService.get('IP_RESTRICTION')){
+      return true
+    }
     const request: Request = context.switchToHttp().getRequest();
 
     const ipPath = `${request.ip}${request.path}`
-
     Attempts.addAttempts(ipPath)
     Attempts.clearAttempts()
     

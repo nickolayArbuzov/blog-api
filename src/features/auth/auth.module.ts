@@ -26,7 +26,7 @@ const queries = [GetAuthMeUseCase]
     SAUsersModule,
     DevicesModule,
     JwtModule.register({
-      secret: process.env.PRIVATE_KEY || 'secret',
+      secret: process.env.JWT_SECRET || 'secret',
     }),
     CqrsModule,
   ],

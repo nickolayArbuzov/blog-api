@@ -40,5 +40,19 @@ describe('AppController', () => {
       })
     });
 
+    /*it('test', async () => {
+      await request(server).post('/auth/registration')
+      await request(server).post('/auth/registration')
+      await request(server).post('/auth/registration')
+      await request(server).post('/auth/registration')
+      await request(server).post('/auth/registration')
+      await request(server).post('/auth/registration')
+      await request(server).post('/auth/registration')
+      await request(server).post('/auth/registration')
+      await request(server).post('/auth/registration')
+      const res = await request(server).post('/auth/registration')
+      expect(res.status).toBe(429)
+    })*/
+
   });
 });
