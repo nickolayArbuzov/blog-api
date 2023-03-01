@@ -17,6 +17,7 @@ import { FindAllCommentsForUsersBlogsUseCase } from './application/use-cases/Fin
 import { CommentsModule } from '../../comments/comments.module';
 import { BloggerSQL } from './infrastructure/blogger.repositorySQL';
 import { BloggerService } from './application/blogger.service';
+import { JWT } from '../../../helpers/helpers/jwt';
 
 const commands = [
   DeleteOneBlogByIdUseCase, CreateOneBlogUseCase, CreateOnePostForBlogIdUseCase, 
@@ -32,6 +33,7 @@ const queries = [FindAllBlogsUseCase, FindAllCommentsForUsersBlogsUseCase]
     BloggerRepo,
     BloggerSQL,
     BlogIsExistRule,
+    JWT,
     JwtService,
     ...commands,
     ...queries,

@@ -13,6 +13,7 @@ import { BloggerBlogModule } from '../blogger-blog/blogger-blog.module';
 import { BloggerUserSQL } from './infrastructure/blogger-user.repositorySQL';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BloggerUserEntity } from './domain/entitites/blogger-user.entity';
+import { JWT } from '../../../helpers/helpers/jwt';
 
 const commands = [BanUserByIdUseCase]
 const queries = [FindAllBannedUsersByBlogIdUseCase]
@@ -24,6 +25,7 @@ const queries = [FindAllBannedUsersByBlogIdUseCase]
     BloggerUserRepo,
     BloggerUserSQL,
     BlogIsExistRule,
+    JWT,
     JwtService,
     ...commands,
     ...queries,

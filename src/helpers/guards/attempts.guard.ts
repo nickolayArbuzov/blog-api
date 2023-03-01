@@ -13,8 +13,10 @@ export class AttemptsGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     if(!+this.configService.get('IP_RESTRICTION')){
+      console.log('IP_RESTRICTION - off')
       return true
     }
+    console.log('IP_RESTRICTION - on')
     const request: Request = context.switchToHttp().getRequest();
 
     const ipPath = `${request.ip}${request.path}`

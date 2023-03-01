@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JWT } from '../../helpers/helpers/jwt';
 import { LikesModule } from '../likes/likes.module';
 import { PostsModule } from '../posts/posts.module';
 import { BlogsController } from './api/blogs.controller';
@@ -25,6 +26,7 @@ const queries = [FindAllBlogsUseCase, FindPostsByBlogIdUseCase, FindOneBlogByIdU
     BlogsRepo,
     BlogsSQL,
     BlogIsExistRule,
+    JWT,
     JwtService,
     ...commands,
     ...queries,

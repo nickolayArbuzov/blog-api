@@ -8,6 +8,7 @@ import { AuthDto } from '../../dto/auth.dto';
 import { DevicesRepo } from '../../../devices/infrastructure/devices.repo';
 import { Device } from '../../../devices/domain/entitites/device';
 import { ConfigService } from '@nestjs/config';
+import { JWT } from '../../../../helpers/helpers/jwt';
 
 export class LoginCommand {
   constructor(
@@ -22,7 +23,7 @@ export class LoginUseCase {
   constructor(
     private usersRepo: UsersRepo,
     private devicesRepo: DevicesRepo,
-    private jwtService: JwtService,
+    private jwtService: JWT,
     private configService: ConfigService,
   ) {}
 
@@ -46,8 +47,8 @@ export class LoginUseCase {
         }
         const payloadAccess = {userId: auth?.id?.toString() ? auth?.id?.toString() : '', userLogin: auth.login, deviceId: device.deviceId, issuedAt: device.issuedAt}
         const payloadRefresh = {userId: auth?.id?.toString() ? auth?.id?.toString() : '', userLogin: auth.login, deviceId: device.deviceId, issuedAt: device.issuedAt}
-        const accessToken = this.jwtService.sign(payloadAccess, {expiresIn: '5m'})
-        const refreshToken = this.jwtService.sign(payloadRefresh, {expiresIn: '10m'})
+        const accessToken = this.jwtService.sign(payloadAccess, {expiresIn: `${Number(this.configService.get('JWT_PERIOD')) / 2}s`})
+        const refreshToken = this.jwtService.sign(payloadRefresh, {expiresIn: `${Number(this.configService.get('JWT_PERIOD'))}s`})
         await this.devicesRepo.createDevice(device)
         return {
           accessToken,

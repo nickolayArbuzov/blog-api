@@ -1,12 +1,12 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import { JWT } from '../helpers/jwt';
 
 @Injectable()
 export class CookieGuard implements CanActivate {
   constructor(
-    private jwtService: JwtService,
-    // add authService with jwtService(verify)
+    private jwtService: JWT,
   ){}
   canActivate(
     context: ExecutionContext,
@@ -14,7 +14,7 @@ export class CookieGuard implements CanActivate {
     const request: Request = context.switchToHttp().getRequest();  
     if (request.cookies){
       try {
-        const user = this.jwtService.verify(request.cookies.refreshToken, {secret: 'secret'})
+        const user = this.jwtService.verify(request.cookies.refreshToken)
         if (user){
           return true
         }

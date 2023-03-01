@@ -23,6 +23,7 @@ import { PostEntity } from './features/posts/domain/entitites/posts.entity';
 import { UserEntity } from './features/sa/sa-users/domain/entitites/user.entity';
 import { CredInfoUserEntity } from './features/sa/sa-users/domain/entitites/credInfoUser.entity';
 import { BanInfoUserEntity } from './features/sa/sa-users/domain/entitites/banInfoUser.entity';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   controllers: [AppController],

@@ -24,7 +24,7 @@ export class UsersSQL {
   }
 
   async findAllUsers(query: QueryUserDto){
-    
+    // TODO проверить работу searchTerm
     const banCondition = query.banStatus === 'all' ? [true, false] : query.banStatus === 'banned' ? [true] : [false]
     const orderByWithDirection = `"${query.sortBy}" ${query.sortDirection}`
     const users = await this.db.query(

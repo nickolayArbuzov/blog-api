@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JWT } from '../../helpers/helpers/jwt';
 import { DevicesModule } from '../devices/devices.module';
 import { SAUsersModule } from '../sa/sa-users/sa-users.module';
 import { AuthController } from './api/auth.controller';
@@ -25,15 +26,13 @@ const queries = [GetAuthMeUseCase]
   imports: [
     SAUsersModule,
     DevicesModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET || 'secret',
-    }),
     CqrsModule,
   ],
   providers: [
+    JwtService,
+    JWT,
     ...commands,
     ...queries,
   ],
-  exports: [JwtModule]
 })
 export class AuthModule {}

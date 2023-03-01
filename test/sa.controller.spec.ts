@@ -40,12 +40,12 @@ describe('AppController', () => {
       })
     });
 
-    /*it('test', async () => {
-      const reg = await request(server).post('/auth/registration').send({login: 'dsad', password: 'fdsdff', email: 'nickrabuzov@yandex.by'})
-      expect(reg.body).toStrictEqual(0)
-      const reg2 = await request(server).post('/auth/registration').send({login: 'dsadd', password: 'fdsdff', email: 'nickrabuzov@yandex.by'})
-      expect(reg2.body).toStrictEqual(0)
-    })*/
+    it('test', async () => {
+      const a = await request(server).post('/auth/registration').send({login: 'logoSer', password: 'fdsdff', email: 'nickrabuzov@yandex.by'})
+      const b = await request(server).post('/auth/registration').send({login: 'logog01', password: 'fdsdff', email: 'nickrabuzov@yandex-1.by'})
+      const users = await request(server).get('/sa/users?searchLoginTerm=logo&sortDirection=asc&sortBy=login').set('Authorization', 'Basic YWRtaW46cXdlcnR5')
+      expect(users.body).toStrictEqual(0)
+    })
 
   });
 });

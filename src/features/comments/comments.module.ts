@@ -12,6 +12,7 @@ import { SAUsersModule } from '../sa/sa-users/sa-users.module';
 import { CommentsSQL } from './infrastructure/comments.repositorySQL';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommentEntity } from './domain/entitites/comments.entity';
+import { JWT } from '../../helpers/helpers/jwt';
 
 const commands = [LikeUseCase, UpdateOneCommentByIdUseCase, DeleteOneCommentByIdUseCase]
 const queries = [FindOneCommentByIdUseCase]
@@ -22,6 +23,7 @@ const queries = [FindOneCommentByIdUseCase]
   providers: [
     CommentsRepo,
     CommentsSQL,
+    JWT,
     JwtService,
     ...commands,
     ...queries,

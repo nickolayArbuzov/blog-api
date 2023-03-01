@@ -15,6 +15,7 @@ import { BloggerUserModule } from '../blogger/blogger-user/blogger-user.module';
 import { PostsSQL } from './infrastructure/posts.repositorySQL';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostEntity } from './domain/entitites/posts.entity';
+import { JWT } from '../../helpers/helpers/jwt';
 
 const commands = [LikeUseCase, CreateOneCommentByPostIdUseCase]
 const queries = [FindCommentsByPostIdCase, FindAllPostsUseCase, FindOnePostByIdUseCase]
@@ -26,6 +27,7 @@ const queries = [FindCommentsByPostIdCase, FindAllPostsUseCase, FindOnePostByIdU
     PostsRepo,
     PostsSQL,
     JwtService,
+    JWT,
     ...commands,
     ...queries,
   ],
