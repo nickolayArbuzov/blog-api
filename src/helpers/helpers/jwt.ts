@@ -14,7 +14,7 @@ export class JWT {
     }
 
     sign(payload: any, options){
-      return this.jwtService.sign(payload, options)
+      return this.jwtService.sign(payload, {...options, secret: this.configService.get('JWT_SECRET')})
     }
     
 }
