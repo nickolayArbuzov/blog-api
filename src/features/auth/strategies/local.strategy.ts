@@ -16,14 +16,15 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
   async validate(username: string, password: string): Promise<any> {
     const auth = await this.usersRepo.findByLoginOrEmail(username)
-      if (!auth || auth.banInfo.isBanned === true){
+    console.log('auth', auth)
+    if (!auth || auth.banInfo.isBanned === true){
+      throw new HttpException('Auth not found', HttpStatus.UNAUTHORIZED);
+    }
+    const candidateHash = await bcrypt.hash(password, auth.passwordSalt.toString())
+    if (auth.passwordHash.toString() === candidateHash) {
+      return { id: auth.id, login: auth.login }
+    } else {
         throw new HttpException('Auth not found', HttpStatus.UNAUTHORIZED);
-      }
-      const candidateHash = await bcrypt.hash(password, auth.passwordSalt.toString())
-      if (auth.passwordHash.toString() === candidateHash) {
-        return { id: auth.id, login: auth.login }
-      } else {
-        throw new HttpException('Auth not found', HttpStatus.UNAUTHORIZED);
-      }
+    }
   }
 }
