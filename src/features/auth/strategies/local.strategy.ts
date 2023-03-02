@@ -16,7 +16,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
   async validate(username: string, password: string): Promise<any> {
     const auth = await this.usersRepo.findByLoginOrEmail(username)
-    console.log('auth', auth)
     if (!auth || auth.banInfo.isBanned === true){
       throw new HttpException('Auth not found', HttpStatus.UNAUTHORIZED);
     }
