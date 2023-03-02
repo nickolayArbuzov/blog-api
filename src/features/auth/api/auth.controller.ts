@@ -43,7 +43,7 @@ export class AuthController {
     @HttpCode(200)
     @Post('login')
     async login(@Req() req, @Res({ passthrough: true }) res: Response){
-        const result = await this.commandBus.execute(new LoginCommand(req.user.id, req.ip, req.headers['user-agent'] || ''))
+        const result = await this.commandBus.execute(new LoginCommand(req.user, req.ip, req.headers['user-agent'] || ''))
         res.cookie(
             'refreshToken', 
             result.refreshToken, 
