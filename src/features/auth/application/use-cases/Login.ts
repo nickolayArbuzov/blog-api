@@ -22,6 +22,7 @@ export class LoginUseCase {
   ) {}
 
   async execute(command: LoginCommand){
+    console.log('command.user.id', command.user.id)
     const deviceId = v4()
     const device: Device = {
       ip: command.ip,
