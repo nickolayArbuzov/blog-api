@@ -25,10 +25,10 @@ export class RegistrationEmailResendingDto {
 
 export class AuthDto {
     @IsString()
-    readonly loginOrEmail: string;
+    loginOrEmail: string;
 
     @IsString()
-    readonly password: string;
+    password: string;
 }
 
 export class RegistrationDto {

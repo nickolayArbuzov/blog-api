@@ -24,11 +24,15 @@ import { UserEntity } from './features/sa/sa-users/domain/entitites/user.entity'
 import { CredInfoUserEntity } from './features/sa/sa-users/domain/entitites/credInfoUser.entity';
 import { BanInfoUserEntity } from './features/sa/sa-users/domain/entitites/banInfoUser.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { LocalStrategy } from './features/auth/strategies/local.strategy';
+import { JwtStrategy } from './features/auth/strategies/jwt.strategy';
 
 @Module({
   controllers: [AppController],
   providers: [
     AppService,
+    LocalStrategy, 
+    JwtStrategy,
   ],
   imports: [
     ConfigModule.forRoot({isGlobal: true}),

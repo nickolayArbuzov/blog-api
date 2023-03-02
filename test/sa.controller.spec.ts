@@ -41,10 +41,16 @@ describe('AppController', () => {
     });
 
     it('test', async () => {
-      const a = await request(server).post('/auth/registration').send({login: 'logoSer', password: 'fdsdff', email: 'nickrabuzov@yandex.by'})
-      const b = await request(server).post('/auth/registration').send({login: 'logog01', password: 'fdsdff', email: 'nickrabuzov@yandex-1.by'})
+      let token = ''
+      let incorrecttoken = ''
+      await request(server).post('/auth/registration').send({login: 'logoSer', password: 'fdsdff', email: 'nickrabuzov@yandex.by'})
+      const login = await request(server).post('/auth/login').send({loginOrEmail: 'logoSer', password: 'fdsdff'})
+      token = login.body.accessToken
+      await request(server).get('/auth/me').set('Authorization', `Bearer ${token}`)
+      await request(server).get('/auth/me').set('Authorization', `Bearer ${incorrecttoken}`)
+
       const users = await request(server).get('/sa/users?searchLoginTerm=logo&sortDirection=asc&sortBy=login').set('Authorization', 'Basic YWRtaW46cXdlcnR5')
-      expect(users.body).toStrictEqual(0)
+      expect(users.body).toStrictEqual(0) 
     })
 
   });

@@ -14,6 +14,8 @@ import { RefreshTokensCommand } from '../application/use-cases/RefreshTokens';
 import { LoginCommand } from '../application/use-cases/Login';
 import { NewPasswordCommand } from '../application/use-cases/NewPassword';
 import { PasswordRecoveryCommand } from '../application/use-cases/PasswordRecovery';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { LocalAuthGuard } from '../guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -37,11 +39,11 @@ export class AuthController {
         return await this.commandBus.execute(new NewPasswordCommand(newPasswordDto))
     }
 
-    @UseGuards(AttemptsGuard)
+    @UseGuards(AttemptsGuard, LocalAuthGuard)
     @HttpCode(200)
     @Post('login')
-    async login(@Body() authDto: AuthDto, @Req() req: Request, @Res({ passthrough: true }) res: Response){
-        const result = await this.commandBus.execute(new LoginCommand(authDto, req.ip, req.headers['user-agent'] || ''))
+    async login(@Req() req, @Res({ passthrough: true }) res: Response){
+        const result = await this.commandBus.execute(new LoginCommand(req.user.id, req.ip, req.headers['user-agent'] || ''))
         res.cookie(
             'refreshToken', 
             result.refreshToken, 
@@ -102,9 +104,9 @@ export class AuthController {
     }
 
     @HttpCode(200)
-    @UseGuards(JWTAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Get('me')
-    async getAuthMe(@Req() req: Request){
+    async getAuthMe(@Req() req){
         return await this.queryBus.execute(new GetAuthMeQuery(req.user.userId))
     }
 
