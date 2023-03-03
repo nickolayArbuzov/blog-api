@@ -22,7 +22,7 @@ export class LoginUseCase {
   ) {}
 
   async execute(command: LoginCommand){
-    console.log('command.user.id', command)
+    console.log('Number(this.configService.get(JWT_PERIOD))', Number(this.configService.get('JWT_PERIOD')))
     const deviceId = v4()
     const device: Device = {
       ip: command.ip,
