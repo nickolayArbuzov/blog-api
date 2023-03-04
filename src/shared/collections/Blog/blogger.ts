@@ -3,13 +3,7 @@ export class Blog {
     description: string
     websiteUrl: string
     createdAt: string
-    blogOwnerInfo: BlogOwnerInfo
-    banInfo: BanBlogInfo
-}
-
-export class BlogOwnerInfo {
-    userId: string
-    userLogin: string
+    ownerUserId: string
 }
 
 export class BanBlogInfo {

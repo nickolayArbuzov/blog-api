@@ -26,6 +26,7 @@ import { BanInfoUserEntity } from './features/sa/sa-users/domain/entitites/banIn
 import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from './features/auth/strategies/local.strategy';
 import { JwtStrategy } from './features/auth/strategies/jwt.strategy';
+import { BanInfoBlogEntity } from './features/blogs/entitites/banInfoBlog.entity';
 
 @Module({
   controllers: [AppController],
@@ -43,7 +44,10 @@ import { JwtStrategy } from './features/auth/strategies/jwt.strategy';
         autoLoadEntities: false,
         synchronize: true,
         entities: [
-          CredInfoUserEntity, BanInfoUserEntity, UserEntity, DeviceEntity
+          UserEntity, CredInfoUserEntity, BanInfoUserEntity, 
+          DeviceEntity,
+          BlogEntity, BanInfoBlogEntity,
+          PostEntity, CommentEntity, LikeEntity, BloggerUserEntity,
         ]
       }
     }}),

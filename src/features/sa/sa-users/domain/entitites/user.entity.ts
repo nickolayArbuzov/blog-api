@@ -27,4 +27,16 @@ export class UserEntity {
   @OneToOne(() => CredInfoUserEntity)
   credInfo: CredInfoUserEntity
 
+  @OneToMany(() => BlogEntity, blog => blog.user)
+  blogs: BlogEntity[]
+
+  @OneToMany(() => PostEntity, post => post.user)
+  posts: PostEntity[]
+
+  @OneToMany(() => CommentEntity, comment => comment.user)
+  comments: CommentEntity[]
+
+  @OneToMany(() => LikeEntity, like => like.user)
+  likes: LikeEntity[]
+
 }

@@ -22,7 +22,6 @@ export class LoginUseCase {
   ) {}
 
   async execute(command: LoginCommand){
-    console.log('Number(this.configService.get(JWT_PERIOD))', Number(this.configService.get('JWT_PERIOD')))
     const deviceId = v4()
     const device: Device = {
       ip: command.ip,
@@ -32,7 +31,6 @@ export class LoginUseCase {
       expiresAt: new Date().getTime() + Number(this.configService.get('JWT_PERIOD')) * 1000,
       userId: command.user.id,
     }
-    console.log('device', device)
     const payloadAccess = {userId: command.user.id || '', userLogin: command.user.login, deviceId: device.deviceId, issuedAt: device.issuedAt}
     const payloadRefresh = {userId: command.user.id || '', userLogin: command.user.login, deviceId: device.deviceId, issuedAt: device.issuedAt}
     const accessToken = this.jwtService.sign(payloadAccess, {expiresIn: `${Number(this.configService.get('JWT_PERIOD')) / 2}s`})

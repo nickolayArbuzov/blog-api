@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import * as constants from './utils/constants';
 import { createAppandServerForTests } from './utils/app';
-import { seedData } from './utils/seed-data';
+import { seedUsers } from './utils/seed-data';
 import { generatePagination, generateQueryPagination, slicedEntityArray } from './utils/helpers';
 
 jest.setTimeout(60000)
@@ -24,7 +24,7 @@ describe('AppController', () => {
     })
 
     it('should seed data', async () => {
-      await seedData(server, 10)
+      await seedUsers(server, 10)
       expect(constants.variables.accessTokens.length).toStrictEqual(constants.variables.createdUsers.length)
     });
 
@@ -43,7 +43,7 @@ describe('AppController', () => {
     it('test', async () => {
       let token = ''
       let incorrecttoken = ''
-      await request(server).post('/auth/registration').send({login: 'logoSer', password: 'fdsdff', email: 'nickrabuzov@yandex.by'})
+      await request(server).post('/auth/registration').send({login: 'logoSer', password: 'fdsdff', email: 'nickarbuzov@yandex.by'})
       const login = await request(server).post('/auth/login').send({loginOrEmail: 'logoSer', password: 'fdsdff'})
       token = login.body.accessToken
       await request(server).get('/auth/me').set('Authorization', `Bearer ${token}`)

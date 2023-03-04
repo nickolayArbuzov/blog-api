@@ -1,6 +1,5 @@
 import { CommandHandler } from '@nestjs/cqrs';
 import { BanUserDto } from '../../../../../shared/dto/ban.dto';
-import { LikesRepo } from '../../../../likes/infrastructure/like.repo';
 import { UsersRepo } from '../../infrastructure/users.repo';
 
 export class BanOneUserByIdCommand {
@@ -14,7 +13,6 @@ export class BanOneUserByIdCommand {
 export class BanOneUserByIdUseCase {
   constructor(
     private usersRepo: UsersRepo,
-    private likesRepo: LikesRepo,
   ) {}
 
   async execute(command: BanOneUserByIdCommand){

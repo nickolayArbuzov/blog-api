@@ -69,11 +69,15 @@ class Variables {
     }
     users = []
     createdUsers = [] 
+
+    blogs = []
+    createdBlogs = []
+
     questionsIds = []
     accessTokens = []
-    blogsIds = []
-    postsIds = []
-    commentsIds = []
+
+    posts = []
+    comments = []
     usersIds = []
     cookies = []
     devicesIds = []
@@ -95,20 +99,24 @@ class Variables {
     setCreatedUsers(createdUser: any){
         this.createdUsers = [...this.createdUsers, createdUser]
     }
+    setBlogs(blog: {name: string, description: string, websiteUrl: string}){
+        this.blogs = [...this.blogs, blog]
+    }
+    setCreatedBlogs(createdBlog: any){
+        this.createdBlogs = [...this.createdBlogs, createdBlog]
+    }
+    
     setQuestionsIds(questionId: string){
         this.questionsIds = [...this.questionsIds, questionId]
     }
     setAccessTokens(accessToken: string){
         this.accessTokens = [...this.accessTokens, accessToken]
     }
-    setBlogsIds(blogId: string){
-        this.blogsIds = [...this.blogsIds, blogId]
+    setPosts(post: string){
+        this.posts = [...this.posts, post]
     }
-    setPostsIds(postId: string){
-        this.postsIds = [...this.postsIds, postId]
-    }
-    setCommentsIds(commentId: string){
-        this.commentsIds = [...this.commentsIds, commentId]
+    setComments(comment: string){
+        this.comments = [...this.comments, comment]
     }
     setUsersIds(userId: string){
         this.usersIds = [...this.usersIds, userId]

@@ -24,6 +24,9 @@ export class LikeEntity {
   @Column('text')
   status: string;
 
+  @ManyToOne(() => UserEntity, user => user.likes)
+  user: UserEntity
+
   @ManyToOne(() => PostEntity, post => post.likes)
   post: PostEntity
 

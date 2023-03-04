@@ -25,6 +25,9 @@ export class CommentEntity {
   @Column('uuid')
   blogId: string;
 
+  @ManyToOne(() => UserEntity, user => user.comments)
+  user: UserEntity
+
   @ManyToOne(() => BlogEntity, blog => blog.comments)
   blog: BlogEntity
 

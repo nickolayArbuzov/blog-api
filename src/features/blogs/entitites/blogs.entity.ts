@@ -1,7 +1,8 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserEntity } from '../../sa/sa-users/domain/entitites/user.entity';
 import { CommentEntity } from '../../comments/domain/entitites/comments.entity';
 import { PostEntity } from '../../posts/domain/entitites/posts.entity';
+import { BanInfoBlogEntity } from './banInfoBlog.entity';
 
 @Entity('blogs')
 export class BlogEntity {
@@ -24,14 +25,14 @@ export class BlogEntity {
   @Column('boolean')
   isMembership: boolean;
 
-  @Column('boolean')
-  isBanned: boolean;
-
-  @Column('timestamp with time zone')
-  banDate: string;
-
   @Column('uuid')
   ownerUserId: string;
+
+  @OneToOne(() => BanInfoBlogEntity)
+  banInfo: BanInfoBlogEntity
+
+  @ManyToOne(() => UserEntity, user => user.blogs)
+  user: UserEntity
 
   @OneToMany(() => PostEntity, post => post.blog)
   posts: PostEntity[]

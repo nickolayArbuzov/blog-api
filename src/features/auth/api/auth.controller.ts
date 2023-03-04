@@ -2,7 +2,6 @@ import {Body, Controller, Get, HttpCode, Post, Req, Res, UseGuards} from '@nestj
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Request, Response } from 'express';
 import { AttemptsGuard } from '../../../helpers/guards/attempts.guard';
-import { JWTAuthGuard } from '../../../helpers/guards/jwt.guard';
 import { PasswordRecoveryDto, AuthDto, RegistrationConfirmationDto, RegistrationDto, RegistrationEmailResendingDto, NewPasswordDto } from '../dto/auth.dto';
 import { CookieGuard } from '../../../helpers/guards/cookie.guard';
 import { GetAuthMeQuery } from '../application/use-cases/GetAuthMe';

@@ -49,10 +49,11 @@ export class BloggerSQL {
   }
 
   async createOneBlog(newBlog: Blog){
+    console.log('newBlog', newBlog)
     const createBlog = await this.db.query(
       `
         insert into blogs
-        (name, description, "websiteUrl", "createdAt", "ownerUserId", "ownerUserLogin", "isBanned", "banDate")
+        (name, description, "websiteUrl", "createdAt", "ownerUserId", "isBanned", "banDate")
         values ($1, $2, $3, $4, $5, $6, $7, $8)
         returning id, name, description, "websiteUrl", "createdAt"
       `, 

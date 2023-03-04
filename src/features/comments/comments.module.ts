@@ -19,7 +19,7 @@ const queries = [FindOneCommentByIdUseCase]
 
 @Module({
   controllers: [CommentsController],
-  imports: [LikesModule, CqrsModule, SAUsersModule],
+  imports: [TypeOrmModule.forFeature([CommentEntity]), LikesModule, CqrsModule, SAUsersModule],
   providers: [
     CommentsRepo,
     CommentsSQL,
@@ -29,7 +29,7 @@ const queries = [FindOneCommentByIdUseCase]
     ...queries,
   ],
   exports: [
-    CommentsRepo
+    CommentsRepo, TypeOrmModule,
   ]
 })
 export class CommentsModule {}

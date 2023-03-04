@@ -15,11 +15,12 @@ export const sendEmail = async (email: string, code: string, action: string) => 
         <a href='https://somesite.com/${action}=${code}'>complete registration</a>
      </p>`
  
-  await transporter.sendMail({
+  const res = await transporter.sendMail({
     from: process.env.GMAIL_ACCAUNT,
     to: email,
     html: emailTemplate(code),
     subject: 'Registration vercel',
   })
+  console.log('mail', res)
 
 }

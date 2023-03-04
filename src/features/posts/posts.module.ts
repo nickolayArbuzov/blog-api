@@ -22,7 +22,7 @@ const queries = [FindCommentsByPostIdCase, FindAllPostsUseCase, FindOnePostByIdU
 
 @Module({
   controllers: [PostsController],
-  imports: [CommentsModule, LikesModule, CqrsModule, forwardRef(() => BlogsModule), BloggerUserModule],
+  imports: [TypeOrmModule.forFeature([PostEntity]), CommentsModule, LikesModule, CqrsModule, forwardRef(() => BlogsModule), BloggerUserModule],
   providers: [
     PostsRepo,
     PostsSQL,
@@ -32,7 +32,7 @@ const queries = [FindCommentsByPostIdCase, FindAllPostsUseCase, FindOnePostByIdU
     ...queries,
   ],
   exports: [
-    PostsRepo
+    PostsRepo, TypeOrmModule,
   ]
 })
 export class PostsModule {}

@@ -11,6 +11,7 @@ import { FindAllBlogsUseCase } from './application/use-cases/FindAllBlogs';
 import { FindOneBlogByIdUseCase } from './application/use-cases/FindOneBlogById';
 import { FindPostsByBlogIdUseCase } from './application/use-cases/FindPostsByBlogId';
 import { BlogIsExistRule } from './custom-validators/customValidateBlog';
+import { BanInfoBlogEntity } from './entitites/banInfoBlog.entity';
 import { BlogEntity } from './entitites/blogs.entity';
 import { BlogsRepo } from './infrastructure/blogs.repo';
 import { BlogsSQL } from './infrastructure/blogs.repositorySQL';
@@ -20,7 +21,7 @@ const queries = [FindAllBlogsUseCase, FindPostsByBlogIdUseCase, FindOneBlogByIdU
 
 @Module({
   controllers: [BlogsController],
-  imports: [PostsModule, LikesModule, CqrsModule],
+  imports: [TypeOrmModule.forFeature([BlogEntity, BanInfoBlogEntity]), PostsModule, LikesModule, CqrsModule],
   providers: [
     BlogsService,
     BlogsRepo,
@@ -32,7 +33,7 @@ const queries = [FindAllBlogsUseCase, FindPostsByBlogIdUseCase, FindOneBlogByIdU
     ...queries,
   ],
   exports: [
-    BlogsRepo
+    BlogsRepo, TypeOrmModule,
   ]
 
 })

@@ -22,14 +22,7 @@ export class CreateOneBlogUseCase {
       description: command.newBlog.description,
       websiteUrl: command.newBlog.websiteUrl,
       createdAt: date.toISOString(),
-      blogOwnerInfo: {
-        userId: command.user.userId,
-        userLogin: command.user.userLogin,
-      },
-      banInfo: {
-        isBanned: false,
-        banDate: null,
-      }
+      ownerUserId: command.user.userId,
     }
 
     const createdBlog = await this.bloggerRepo.createOneBlog(blog)

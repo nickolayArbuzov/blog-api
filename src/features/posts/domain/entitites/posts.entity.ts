@@ -25,6 +25,9 @@ export class PostEntity {
   @Column('timestamp with time zone')
   createdAt: string;
 
+  @ManyToOne(() => UserEntity, user => user.posts)
+  user: UserEntity
+
   @ManyToOne(() => BlogEntity, blog => blog.posts)
   blog: BlogEntity
 
