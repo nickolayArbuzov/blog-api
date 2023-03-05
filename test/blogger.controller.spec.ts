@@ -29,14 +29,16 @@ describe('AppController', () => {
     });
 
     it('find all blogs', async () => {
-      constants.variables.setQuery(generatePagination(constants.variables.createdUsers.length))
-      const users = await request(server).get(`/sa/users${generateQueryPagination(constants.variables.query)}`).set('Authorization', 'Basic YWRtaW46cXdlcnR5')
-      expect(users.body).toStrictEqual({
+      constants.variables.setQuery(generatePagination(constants.variables.createdBlogs.length))
+      const blogs = await request(server).get(`/blogger/blogs${generateQueryPagination(constants.variables.query)}`)
+        .set('Authorization', `Bearer ${constants.variables.accessTokens[0]}`)
+      
+      expect(blogs.body).toStrictEqual({
         page: constants.variables.query.pageNumber,
         pageSize: constants.variables.query.pageSize,
-        pagesCount: Math.ceil(constants.variables.createdUsers.length / constants.variables.query.pageSize),
-        totalCount: constants.variables.createdUsers.length,
-        items: slicedEntityArray(constants.variables.createdUsers, constants.variables.query),
+        pagesCount: Math.ceil(constants.variables.createdBlogs.length / constants.variables.query.pageSize),
+        totalCount: constants.variables.createdBlogs.length,
+        items: slicedEntityArray(constants.variables.createdBlogs, constants.variables.query),
       })
     });
 

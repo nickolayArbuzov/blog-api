@@ -16,12 +16,15 @@ export class AllDataService {
     private userEntity: Repository<UserEntity>,
     @InjectRepository(DeviceEntity)
     private deviceEntity: Repository<DeviceEntity>,
+    @InjectRepository(BlogEntity)
+    private blogEntity: Repository<BlogEntity>,
     
   ) {}
 
   async deleteAllData(): Promise<void> {
     await this.userEntity.delete({})
     await this.deviceEntity.delete({})
+    await this.blogEntity.delete({})
   }
   
 }

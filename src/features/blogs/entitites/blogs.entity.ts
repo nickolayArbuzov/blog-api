@@ -25,13 +25,10 @@ export class BlogEntity {
   @Column('boolean')
   isMembership: boolean;
 
-  @Column('uuid')
-  ownerUserId: string;
-
   @OneToOne(() => BanInfoBlogEntity)
   banInfo: BanInfoBlogEntity
 
-  @ManyToOne(() => UserEntity, user => user.blogs)
+  @ManyToOne(() => UserEntity, user => user.blogs, { onDelete: 'CASCADE' })
   user: UserEntity
 
   @OneToMany(() => PostEntity, post => post.blog)

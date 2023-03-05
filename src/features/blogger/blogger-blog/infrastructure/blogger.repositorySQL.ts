@@ -16,9 +16,9 @@ export class BloggerSQL {
     const orderByWithDirection = `"${query.sortBy}" ${query.sortDirection}`
     const blogs = await this.db.query(
       `
-        select id, name, description, "websiteUrl", "createdAt"
-        from blogs
-        where lower(name) like $3 and "ownerUserId" = $4
+        select id, name, description, "websiteUrl", "createdAt", "isMembership"
+        from blogs b
+        where lower(name) like $3 and "userId" = $4
         order by ${orderByWithDirection} 
         limit $2
         offset $1
@@ -29,7 +29,7 @@ export class BloggerSQL {
       `
         select count(*) 
         from blogs
-        where lower(name) like $1 and "ownerUserId" = $2
+        where lower(name) like $1 and "userId" = $2
       `,
       [`%${query.searchNameTerm.toLocaleLowerCase()}%`, userId]
     )
@@ -43,32 +43,38 @@ export class BloggerSQL {
           description: i.description,
           websiteUrl: i.websiteUrl,
           createdAt: i.createdAt,
+          isMembership: i.isMembership,
         }
       }),
     }
   }
 
   async createOneBlog(newBlog: Blog){
-    console.log('newBlog', newBlog)
     const createBlog = await this.db.query(
       `
         insert into blogs
-        (name, description, "websiteUrl", "createdAt", "ownerUserId", "isBanned", "banDate")
-        values ($1, $2, $3, $4, $5, $6, $7, $8)
-        returning id, name, description, "websiteUrl", "createdAt"
+        (name, description, "websiteUrl", "createdAt", "userId", "isMembership")
+        values ($1, $2, $3, $4, $5, false)
+        returning id, name, description, "websiteUrl", "createdAt", "isMembership"
       `, 
       [
-        newBlog.name, newBlog.description, newBlog.websiteUrl, newBlog.createdAt,
-        newBlog.blogOwnerInfo.userId, newBlog.blogOwnerInfo.userLogin,
-        newBlog.banInfo.isBanned, newBlog.banInfo.banDate,
+        newBlog.name, newBlog.description, newBlog.websiteUrl, newBlog.createdAt, newBlog.ownerUserId, 
       ]
     )
+    await this.db.query(
+      `
+        insert into ban_info_blogs
+        ("isBanned", "banDate", "blogId")
+        values (false, null, '${createBlog[0].id}')
+      `
+    )
     return {
-      _id: createBlog[0].id.toString(),
+      id: createBlog[0].id,
       name: createBlog[0].name,
       description: createBlog[0].description,
       websiteUrl: createBlog[0].websiteUrl,
       createdAt: createBlog[0].createdAt,
+      isMembership: createBlog[0].isMembership,
     }
   }
 

@@ -21,6 +21,5 @@ export const sendEmail = async (email: string, code: string, action: string) => 
     html: emailTemplate(code),
     subject: 'Registration vercel',
   })
-  console.log('mail', res)
 
 }

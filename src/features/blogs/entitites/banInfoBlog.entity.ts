@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { BlogEntity } from './blogs.entity';
 
-@Entity('banInfoBlog')
+@Entity('ban_info_blogs')
 export class BanInfoBlogEntity {
 
   @PrimaryGeneratedColumn('uuid')

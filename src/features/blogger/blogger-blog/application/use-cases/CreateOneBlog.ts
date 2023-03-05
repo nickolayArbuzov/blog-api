@@ -25,14 +25,6 @@ export class CreateOneBlogUseCase {
       ownerUserId: command.user.userId,
     }
 
-    const createdBlog = await this.bloggerRepo.createOneBlog(blog)
-
-    return {
-      id: createdBlog._id,
-      name: createdBlog.name,
-      description: createdBlog.description,
-      websiteUrl: createdBlog.websiteUrl,
-      createdAt: createdBlog.createdAt,
-    }
+    return await this.bloggerRepo.createOneBlog(blog)
   }
 }

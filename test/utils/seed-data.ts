@@ -42,7 +42,6 @@ export const seedBlogs = async (server: any, countBlogs: number, accessToken: st
     const response = await request(server).post('/blogger/blogs')
       .set('Authorization', `Bearer ${accessToken}`)
       .send(blog)
-    expect(response.body).toStrictEqual(0)
     constants.variables.setCreatedBlogs(response.body)
   }
 }
